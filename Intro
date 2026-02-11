@@ -63,5 +63,5 @@ task.wait(frameInterval)
 end
 TweenService:Create(gui, TweenInfo.new(1), {Position = UDim2.new(0,0,-1,0)}):Play()
 task.wait(3)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/bruton-lua-sources/BRUTON-HUB-/refs/heads/main/BRUTON"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/bruton-lua-sources/Kkkkkk/refs/heads/main/V2.9.lua"))()
 end)
