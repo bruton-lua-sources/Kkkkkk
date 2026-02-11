@@ -1,0 +1,67 @@
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local SoundService = game:GetService("SoundService")
+local ContentProvider = game:GetService("ContentProvider")
+local TweenService = game:GetService("TweenService")
+local gui = Instance.new("ScreenGui", CoreGui)
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+local img = Instance.new("ImageLabel", gui)
+img.Size = UDim2.fromScale(1, 1)
+img.Position = UDim2.fromScale(0, 0)
+img.BackgroundTransparency = 1
+img.ScaleType = Enum.ScaleType.Crop
+local title = Instance.new("TextLabel", gui)
+title.Size = UDim2.fromScale(1, 0.1)
+title.Position = UDim2.fromScale(0, 0.88)
+title.BackgroundTransparency = 1
+title.Text = "BRUTON HUB"
+title.Font = Enum.Font.GothamBlack
+title.TextSize = 48
+title.TextColor3 = Color3.new(1, 1, 1)
+title.TextStrokeTransparency = 0
+title.TextStrokeColor3 = Color3.fromRGB(0, 200, 255)
+local Images = {
+"rbxassetid://81598714886863","rbxassetid://117947725040519","rbxassetid://84382739850193","rbxassetid://140034013918884",
+"rbxassetid://128154162906285","rbxassetid://105931420556781","rbxassetid://88604065000970","rbxassetid://110884967821413",
+"rbxassetid://89933300957335","rbxassetid://133574403433921","rbxassetid://118397693644381","rbxassetid://118397693644381",
+"rbxassetid://117605522396218","rbxassetid://81719672030794","rbxassetid://119798730362822","rbxassetid://124799507407837",
+"rbxassetid://109962190654493","rbxassetid://86930208636159","rbxassetid://121616288288072","rbxassetid://96219035800259",
+"rbxassetid://119385165962720","rbxassetid://119576396110138","rbxassetid://122980259605258","rbxassetid://77125505351346",
+"rbxassetid://138533387924648","rbxassetid://86666929389234","rbxassetid://79173081251729","rbxassetid://71956024576943",
+"rbxassetid://131946983813714","rbxassetid://139796113971039","rbxassetid://76557829651090","rbxassetid://89471018952201",
+"rbxassetid://135172025611457","rbxassetid://132440216633034","rbxassetid://71939796642337","rbxassetid://84704083294599",
+"rbxassetid://97159142615266","rbxassetid://106460025337452","rbxassetid://94797161344871","rbxassetid://137068379844173",
+"rbxassetid://72442538589192","rbxassetid://82727586061062","rbxassetid://81353349175705","rbxassetid://116581125378797",
+"rbxassetid://131589457983890","rbxassetid://118416996722614","rbxassetid://140087838752292","rbxassetid://104352409522762",
+"rbxassetid://110801517050945","rbxassetid://96852966392163","rbxassetid://135859584696271","rbxassetid://99526879227978",
+"rbxassetid://140129003496405","rbxassetid://91252021103989","rbxassetid://129046379176109"
+}
+ContentProvider:PreloadAsync(Images)
+local getAsset = getcustomasset or getsynasset
+local audioUrl = "https://github.com/bruton-lua-sources/Mp3/raw/refs/heads/main/Savetik_1770803963.mp3"
+local fileName = audioUrl:match("([^/]+)$")
+if not pcall(function() return readfile(fileName) ~= nil end) then
+local success, data = pcall(function() return game:HttpGet(audioUrl) end)
+if success and data then pcall(function() writefile(fileName, data) end) end
+end
+local sound = Instance.new("Sound", SoundService)
+sound.SoundId = getAsset(fileName)
+sound.Volume = 1
+sound:Play()
+local totalTime = 17
+local frameCount = #Images
+local frameInterval = totalTime / frameCount
+local frameIndex = 1
+task.spawn(function()
+local startTime = tick()
+while tick() - startTime < totalTime do
+img.Image = Images[frameIndex]
+frameIndex += 1
+if frameIndex > #Images then frameIndex = 1 end
+task.wait(frameInterval)
+end
+TweenService:Create(gui, TweenInfo.new(1), {Position = UDim2.new(0,0,-1,0)}):Play()
+task.wait(3)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/bruton-lua-sources/BRUTON-HUB-/refs/heads/main/BRUTON"))()
+end)
